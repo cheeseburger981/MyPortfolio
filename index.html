@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- EDIT: your name -->
+  <title>Theo — Web Developer</title>
+  <meta name="description" content="CS student at LaSalle College who builds web apps and likes to code.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #12151d;
+      --line: #222836;
+      --text: #e6e9ef;
+      --muted: #8b93a7;
+      --accent: #7cf29a;
+      --accent-2: #5cc8ff;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --sans: "Space Grotesk", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      background-position: -1px -1px;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at top, transparent 0%, var(--bg) 70%);
+      pointer-events: none; z-index: -1;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(11, 13, 18, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 60px; }
+    .logo { font-family: var(--mono); font-weight: 600; color: var(--accent); }
+    .logo span { color: var(--muted); }
+    nav ul { display: flex; gap: 28px; list-style: none; font-family: var(--mono); font-size: 0.85rem; }
+    nav ul a { color: var(--muted); transition: color .2s; }
+    nav ul a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero { padding: 120px 0 100px; }
+    .prompt { font-family: var(--mono); color: var(--accent); font-size: 0.95rem; margin-bottom: 18px; }
+    .prompt::after { content: "▋"; animation: blink 1s steps(1) infinite; margin-left: 4px; }
+    @keyframes blink { 50% { opacity: 0; } }
+    h1 { font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
+    h1 .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .lead { margin-top: 22px; font-size: 1.2rem; color: var(--muted); max-width: 560px; }
+    .lead strong { color: var(--text); font-weight: 500; }
+    .cta { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      font-family: var(--mono); font-size: 0.9rem;
+      padding: 12px 22px; border-radius: 6px;
+      border: 1px solid var(--line); transition: all .2s;
+    }
+    .btn.primary { background: var(--accent); color: #0b0d12; border-color: var(--accent); font-weight: 600; }
+    .btn.primary:hover { background: transparent; color: var(--accent); }
+    .btn:not(.primary):hover { border-color: var(--accent-2); color: var(--accent-2); }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .label { font-family: var(--mono); color: var(--accent); font-size: 0.85rem; margin-bottom: 8px; }
+    h2 { font-size: 2rem; margin-bottom: 32px; letter-spacing: -0.01em; }
+
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+    .about-grid p { color: var(--muted); margin-bottom: 14px; }
+    .about-grid p strong { color: var(--text); font-weight: 500; }
+    .terminal {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+      font-family: var(--mono); font-size: 0.85rem; overflow: hidden;
+    }
+    .terminal .bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+    .terminal .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+    .terminal .bar i:nth-child(1) { background: #ff5f57; }
+    .terminal .bar i:nth-child(2) { background: #febc2e; }
+    .terminal .bar i:nth-child(3) { background: #28c840; }
+    .terminal pre { padding: 18px; color: var(--muted); white-space: pre-wrap; }
+    .terminal .k { color: var(--accent-2); }
+    .terminal .s { color: var(--accent); }
+
+    /* Projects */
+    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+      padding: 24px; display: flex; flex-direction: column; transition: transform .2s, border-color .2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .card .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .card .folder { font-size: 1.6rem; color: var(--accent); }
+    .card .links { display: flex; gap: 14px; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+    .card .links a:hover { color: var(--accent); }
+    .card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 0.95rem; flex: 1; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; list-style: none; }
+    .tags li {
+      font-family: var(--mono); font-size: 0.75rem; color: var(--accent-2);
+      border: 1px solid var(--line); padding: 3px 9px; border-radius: 999px;
+    }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .skill-group { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+    .skill-group h4 { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 12px; font-weight: 600; }
+    .skill-group ul { list-style: none; color: var(--muted); }
+    .skill-group li { padding: 4px 0; }
+    .skill-group li::before { content: "▹ "; color: var(--accent-2); }
+
+    /* Contact */
+    .contact { text-align: center; }
+    .contact p { color: var(--muted); max-width: 520px; margin: 0 auto 32px; }
+    .socials { display: flex; justify-content: center; gap: 24px; margin-top: 32px; font-family: var(--mono); font-size: 0.9rem; flex-wrap: wrap; }
+    .socials a { color: var(--muted); border-bottom: 1px solid transparent; transition: all .2s; }
+    .socials a:hover { color: var(--accent); border-color: var(--accent); }
+
+    footer { border-top: 1px solid var(--line); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    @media (max-width: 720px) {
+      nav ul { gap: 16px; font-size: 0.75rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .hero { padding: 80px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <!-- EDIT: your name -->
+      <a href="#" class="logo">~/theo<span>.dev</span></a>
+      <ul>
+        <li><a href="#about">about</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="prompt">$ whoami</p>
+      <!-- EDIT: your name -->
+      <h1>Hi, I'm Theo.<br><span class="grad">I'm a developer.</span></h1>
+      <p class="lead">CS student at <strong>LaSalle College</strong> who builds web apps and likes to code.</p>
+      <div class="cta">
+        <a href="#projects" class="btn primary">View my work</a>
+        <a href="#contact" class="btn">Get in touch</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="about" class="reveal">
+    <div class="wrap">
+      <p class="label">01 // about</p>
+      <h2>About me</h2>
+      <div class="about-grid">
+        <div>
+          <!-- EDIT: replace with your own About paragraph -->
+          <p>I'm a Computer Science student at <strong>LaSalle College</strong> in Montréal. I like turning ideas into things people can actually click on, from small tools to full web apps.</p>
+          <p>Right now I'm focused on getting better at <strong>front-end and full-stack development</strong>, writing clean code, and shipping projects I'm proud of.</p>
+          <p>When I'm not coding for class, I'm usually coding for fun.</p>
+        </div>
+        <div class="terminal">
+          <div class="bar"><i></i><i></i><i></i></div>
+<pre><span class="k">const</span> me = {
+  school: <span class="s">"LaSalle College"</span>,
+  program: <span class="s">"Computer Science"</span>,
+  builds: <span class="s">"web apps"</span>,
+  likes: [<span class="s">"coding"</span>, <span class="s">"learning"</span>],
+  status: <span class="s">"open to opportunities"</span>
+};</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="reveal">
+    <div class="wrap">
+      <p class="label">02 // projects</p>
+      <h2>Things I've built</h2>
+      <div class="projects">
+
+        <!-- EDIT: one <article> per project. Copy/paste to add more. -->
+        <article class="card">
+          <div class="top">
+            <span class="folder">▣</span>
+            <div class="links">
+              <a href="https://github.com/" target="_blank" rel="noopener">code</a>
+            </div>
+          </div>
+          <h3>Bank System</h3>
+          <p>A banking app connected to a SQL database. Users can create accounts, log in, deposit, withdraw and transfer money, with every transaction saved and tracked in the database.</p>
+          <ul class="tags"><li>PHP</li><li>SQL / MySQL</li><li>HTML</li><li>CSS</li></ul>
+        </article>
+
+        <article class="card">
+          <div class="top">
+            <span class="folder">▣</span>
+            <div class="links">
+              <a href="https://github.com/" target="_blank" rel="noopener">code</a>
+              <a href="#" target="_blank" rel="noopener">live</a>
+            </div>
+          </div>
+          <h3>Task Tracker</h3>
+          <p>A simple to-do web app for keeping track of assignments. Add, check off and delete tasks, filter by status, and your list is saved in the browser so it's still there when you come back.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="wrap">
+      <p class="label">03 // skills</p>
+      <h2>What I work with</h2>
+      <!-- EDIT: keep only the tools you actually use -->
+      <div class="skills">
+        <div class="skill-group">
+          <h4>front-end</h4>
+          <ul><li>HTML &amp; CSS</li><li>JavaScript</li></ul>
+        </div>
+        <div class="skill-group">
+          <h4>back-end</h4>
+          <ul><li>Node.js</li><li>PHP</li><li>SQL / MySQL</li></ul>
+        </div>
+        <div class="skill-group">
+          <h4>languages</h4>
+          <ul><li>Java</li><li>Python</li><li>C#</li><li>PHP</li><li>HTML</li></ul>
+        </div>
+        <div class="skill-group">
+          <h4>tools</h4>
+          <ul><li>Git &amp; GitHub</li><li>VS Code</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact reveal">
+    <div class="wrap">
+      <p class="label">04 // contact</p>
+      <h2>Let's talk</h2>
+      <p>I'm open to internships, collaborations, and interesting projects. My inbox is always open.</p>
+      <!-- EDIT: your email -->
+      <a href="mailto:you@example.com" class="btn primary">Say hello</a>
+      <div class="socials">
+        <!-- EDIT: your profile links -->
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:you@example.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <!-- EDIT: your name -->
+    <p>Built by Theo · © <span id="year"></span></p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
